@@ -54,7 +54,26 @@ namespace MultiTenantDemo.Controllers
 
             var currentTenant = HttpContext.GetTenant();
 
-            return "租户：" + JsonSerializer.Serialize(tenant) + Environment.NewLine + "当前租户："+JsonSerializer.Serialize(currentTenant);
+            return "租户：" + JsonSerializer.Serialize(tenant) + Environment.NewLine + "当前租户：" + JsonSerializer.Serialize(currentTenant);
+        }
+    }
+
+    [ApiController]
+    [Route("api/v3/multitenant")]
+    public class MultiTenantV3Controller : ControllerBase
+    {
+        private readonly OperationIdService _operationIdService;
+        public MultiTenantV3Controller(
+            OperationIdService operationIdService
+            )
+        {
+            _operationIdService = operationIdService;
+        }
+
+        [HttpGet]
+        public async Task<string> GetAsync()
+        {
+            return await Task.FromResult(_operationIdService.Id.ToString());
         }
     }
 }
