@@ -17,5 +17,7 @@ namespace MS.Demo.MultiTenant.Extension
         => builder.UseMiddleware<TenantMiddleware<T>>();
 
         public static IApplicationBuilder UseMultiTenancy(this IApplicationBuilder builder) => builder.UseMiddleware<TenantMiddleware<Tenant>>();
+
+        public static IApplicationBuilder UseMultiTenantContainer<T>(this IApplicationBuilder builder) where T : Tenant => builder.UseMiddleware<MultiTenantContainerMiddleware<T>>();
     }
 }

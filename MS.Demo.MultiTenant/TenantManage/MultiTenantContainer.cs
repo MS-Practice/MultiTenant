@@ -64,35 +64,23 @@ namespace MS.Demo.MultiTenant.TenantManage
             }
         }
 
-        public IDisposer Disposer => throw new NotImplementedException();
+        public IDisposer Disposer => GetCurrentTenantScope().Disposer;
 
-        public object Tag => throw new NotImplementedException();
+        public object Tag => GetCurrentTenantScope().Tag;
 
-        public IComponentRegistry ComponentRegistry => throw new NotImplementedException();
+        public IComponentRegistry ComponentRegistry => GetCurrentTenantScope().ComponentRegistry;
 
         public event EventHandler<LifetimeScopeBeginningEventArgs> ChildLifetimeScopeBeginning;
         public event EventHandler<LifetimeScopeEndingEventArgs> CurrentScopeEnding;
         public event EventHandler<ResolveOperationBeginningEventArgs> ResolveOperationBeginning;
 
-        public ILifetimeScope BeginLifetimeScope()
-        {
-            throw new NotImplementedException();
-        }
+        public ILifetimeScope BeginLifetimeScope() => GetCurrentTenantScope().BeginLifetimeScope();
 
-        public ILifetimeScope BeginLifetimeScope(object tag)
-        {
-            throw new NotImplementedException();
-        }
+        public ILifetimeScope BeginLifetimeScope(object tag) => GetCurrentTenantScope().BeginLifetimeScope(tag);
 
-        public ILifetimeScope BeginLifetimeScope(Action<ContainerBuilder> configurationAction)
-        {
-            throw new NotImplementedException();
-        }
+        public ILifetimeScope BeginLifetimeScope(Action<ContainerBuilder> configurationAction) => GetCurrentTenantScope().BeginLifetimeScope(configurationAction);
 
-        public ILifetimeScope BeginLifetimeScope(object tag, Action<ContainerBuilder> configurationAction)
-        {
-            throw new NotImplementedException();
-        }
+        public ILifetimeScope BeginLifetimeScope(object tag, Action<ContainerBuilder> configurationAction) => GetCurrentTenantScope().BeginLifetimeScope(tag, configurationAction);
 
         public void Dispose()
         {
@@ -106,14 +94,8 @@ namespace MS.Demo.MultiTenant.TenantManage
             }
         }
 
-        public ValueTask DisposeAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public ValueTask DisposeAsync() => GetCurrentTenantScope().DisposeAsync();
 
-        public object ResolveComponent(ResolveRequest request)
-        {
-            throw new NotImplementedException();
-        }
+        public object ResolveComponent(ResolveRequest request) => GetCurrentTenantScope().ResolveComponent(request);
     }
 }
