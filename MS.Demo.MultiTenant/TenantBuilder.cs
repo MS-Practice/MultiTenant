@@ -1,18 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace MS.Demo.MultiTenant
-{
-    public class TenantBuilder<T> where T : Tenant
-    {
+namespace MS.Demo.MultiTenant {
+    public class TenantBuilder<T> where T : Tenant {
         private readonly IServiceCollection _services;
 
-        public TenantBuilder(IServiceCollection services)
-        {
+        public TenantBuilder(IServiceCollection services) {
             services.AddTransient<TenantAccessService<T>>();
             _services = services;
         }
@@ -23,8 +20,7 @@ namespace MS.Demo.MultiTenant
         /// <typeparam name="TImp"></typeparam>
         /// <param name="lifetime"></param>
         /// <returns></returns>
-        public TenantBuilder<T> WithResolutionResolver<TImp>(ServiceLifetime lifetime = ServiceLifetime.Transient)
-        {
+        public TenantBuilder<T> WithResolutionResolver<TImp>(ServiceLifetime lifetime = ServiceLifetime.Transient) {
             _services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             _services.Add(ServiceDescriptor.Describe(typeof(ITenantResolutionResolver), typeof(TImp), lifetime));
             return this;
@@ -36,8 +32,7 @@ namespace MS.Demo.MultiTenant
         /// <typeparam name="TImp"></typeparam>
         /// <param name="lifetime"></param>
         /// <returns></returns>
-        public TenantBuilder<T> WithStore<TImp>(ServiceLifetime lifetime = ServiceLifetime.Transient) where TImp : class, ITenantStore<T>
-        {
+        public TenantBuilder<T> WithStore<TImp>(ServiceLifetime lifetime = ServiceLifetime.Transient) where TImp : class, ITenantStore<T> {
             _services.Add(ServiceDescriptor.Describe(typeof(ITenantStore<T>), typeof(TImp), lifetime));
             return this;
         }

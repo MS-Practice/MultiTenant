@@ -1,24 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace MS.Demo.MultiTenant.Middleware
-{
-    class TenantMiddleware<T> where T:Tenant
-    {
+namespace MS.Demo.MultiTenant.Middleware {
+    class TenantMiddleware<T> where T : Tenant {
         private readonly RequestDelegate _next;
 
-        public TenantMiddleware(RequestDelegate next)
-        {
+        public TenantMiddleware(RequestDelegate next) {
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context)
-        {
-            if (!context.Items.ContainsKey(Constants.HttpContextTenantKey))
-            {
+        public async Task InvokeAsync(HttpContext context) {
+            if (!context.Items.ContainsKey(Constants.HttpContextTenantKey)) {
                 var tenantService = context.RequestServices.GetService(typeof(TenantAccessService<T>)) as TenantAccessService<T>;
                 context.Items.Add(Constants.HttpContextTenantKey, await tenantService.GetTenantAsync());
             }
